@@ -54,6 +54,10 @@ module Weechat
       Weechat::Hooks::CommandRun.find_by_id(id).call(Weechat::Buffer.from_ptr(buffer), command)
     end
 
+    def completion_callback(id, data, buffer, completion)
+      Weechat::Hooks::Completion.find_by_id(id).call(Weechat::Buffer.from_ptr(buffer), completion)
+    end
+
     # low level Timer callback
     def timer_callback(id, remaining)
       Weechat::Timer.find_by_id(id).call(remaining.to_i)
