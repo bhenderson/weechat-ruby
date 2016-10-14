@@ -1,3 +1,11 @@
+FORK
+====
+
+The upstream fork is no longer maintained, and the author encouraged me to
+maintain my own copy. He said this lib isn't compatible with recent versions of
+weechat. Seems to work ok for me so far. YMMV
+
+
 What this library is about
 ==========================
 

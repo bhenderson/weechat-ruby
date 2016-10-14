@@ -1,34 +1,22 @@
 require 'rubygems'
-require 'rake/gempackagetask'
 
-VERSION = "0.1.0"
+VERSION = "0.2.0"
 
-spec = Gem::Specification.new do |s|
-  s.name              = "weechat"
-  s.summary           = "An abstraction layer on top of the WeeChat API."
-  s.description       = "An abstraction layer on top of the WeeChat API, allowing a cleaner and more intuitive way of writing Ruby scripts for WeeChat."
-  s.version           = VERSION
-  s.author            = "Dominik Honnef"
-  s.email             = "dominikho@gmx.net"
-  s.date              = Time.now.strftime "%Y-%m-%d"
-  s.require_path      = "lib"
-  s.homepage          = "http://dominikh.fork-bomb.de"
-  s.rubyforge_project = ""
+require 'rubygems'
+require 'hoe'
+require 'isolate/rake'
 
-  s.has_rdoc = 'yard'
+Hoe.plugin :isolate
+Hoe.plugin :version, :git
 
-  # s.required_ruby_version = '>= 1.9.1'
+Hoe.spec 'weechat-bhenderson' do
+  developer 'Brian Henderson', 'henderson.bj@gmail.com'
 
-  # s.add_dependency "keyword_arguments"
-  s.add_dependency "json"
-  # s.add_development_dependency "baretest"
-  # s.add_development_dependency "mocha"
-
-  s.files = FileList["bin/*", "lib/**/*.rb", "[A-Z]*", "examples/**/*"].to_a
-  s.executables = [""]
-end
-
-Rake::GemPackageTask.new(spec)do |pkg|
+  self.testlib     = :none
+  self.urls        = ["https://github.com/bhenderson/weechat-ruby"]
+  self.summary     = "An abstraction layer on top of the WeeChat API"
+  self.description = self.summary + ", allowing a cleaner and more intuitive way of writing Ruby scripts for WeeChat."
+  self.license "GPL3"
 end
 
 begin
@@ -36,20 +24,4 @@ begin
   YARD::Rake::YardocTask.new do |t|
   end
 rescue LoadError
-end
-
-task :test do
-  begin
-    require "baretest"
-  rescue LoadError => e
-    puts "Could not run tests: #{e}"
-  end
-
-  BareTest.load_standard_test_files(
-                                    :verbose => false,
-                                    :setup_file => 'test/setup.rb',
-                                    :chdir => File.absolute_path("#{__FILE__}/../")
-                                    )
-
-  BareTest.run(:format => "cli", :interactive => false)
 end
